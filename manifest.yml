@@ -1,0 +1,28 @@
+modules:
+  trigger:
+    - key: evidence-audit-trigger
+      function: auditFunction
+      events:
+        - avi:jira:updated:issue
+  jira:issuePanel:
+    - key: evidence-audit-panel
+      resource: main
+      resolver:
+        function: resolverFunc
+      title: EvidenceGraph Auditor
+  function:
+    - key: auditFunction
+      handler: index.auditHandler
+    - key: resolverFunc
+      handler: index.panelResolver
+app:
+  id: ari:cloud:ecosystem::app/evidencegraph-auditor
+  runtime:
+    name: nodejs21.x
+permissions:
+  scopes:
+    - read:jira-work
+    - write:jira-work
+resources:
+  - key: main
+    path: src/frontend/index.jsx
